@@ -12,9 +12,9 @@ namespace KnewinEventNetCoreApi.Api.Controllers
     [Route("[controller]")]
     public class TesteController : ControllerBase
     {
-        private readonly ITeste _testeService;
+        private readonly ITesteService _testeService;
 
-        public TesteController(ITeste iTeste)
+        public TesteController(ITesteService iTeste)
         {
             _testeService = iTeste;
         }

@@ -1,3 +1,5 @@
+using KnewinEventNetCoreApi.Model.Entities;
+using KnewinEventNetCoreApi.Repository.Repository;
 using KnewinEventNetCoreApi.Service.IService;
 using KnewinEventNetCoreApi.Service.Service;
 using Microsoft.AspNetCore.Builder;
@@ -30,7 +32,9 @@ namespace KnewinEventNetCoreApi.Api
             services.AddControllers();
 
             #region Injeção das Interfaces
-            services.AddScoped<ITeste, Teste>();
+            services.AddScoped<IEquipeService, EquipeService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<ITesteService, TesteService>();
             #endregion
 
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KnewinEventNetCoreApi.Service.IService
 {
-    public interface ITeste
+    public interface ITesteService
     {
         string Get();
     }

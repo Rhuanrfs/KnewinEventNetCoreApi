@@ -5,7 +5,7 @@ using System.Text;
 
 namespace KnewinEventNetCoreApi.Service.Service
 {
-    public class Teste : ITeste
+    public class TesteService : ITesteService
     {
         public string Get() => "Teste OK";
 

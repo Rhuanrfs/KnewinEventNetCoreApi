@@ -3,8 +3,7 @@
 --Calendários(Cada equipe irá possuir um ou mais calendários)
 --Eventos(Um evento tem que estar vinculado à algum calendário)
 
---Scaffold-DbContext "Server=.\SQLExpress;Database=KNEWIN_EVENT;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
---Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=KNEWIN_EVENT;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+--Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=KNEWIN_EVENT;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities
 
 CREATE DATABASE KNEWIN_EVENT
 GO
