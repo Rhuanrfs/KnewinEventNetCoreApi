@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/
+/KnewinEventNetCoreApi.Api/bin
+/KnewinEventNetCoreApi.Api/obj
+/KnewinEventNetCoreApi.Model/bin
+/KnewinEventNetCoreApi.Model/obj
+/KnewinEventNetCoreApi.Service/bin
+/KnewinEventNetCoreApi.Service/obj
+/KnewinEventNetCoreApi.Repository/bin
+/KnewinEventNetCoreApi.Repository/obj
+
