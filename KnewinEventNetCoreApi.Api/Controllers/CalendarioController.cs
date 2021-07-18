@@ -1,5 +1,4 @@
-﻿using KnewinEventNetCoreApi.Model.Busca;
-using KnewinEventNetCoreApi.Model.Entities;
+﻿using KnewinEventNetCoreApi.Model.Entities;
 using KnewinEventNetCoreApi.Service.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,35 +11,35 @@ namespace KnewinEventNetCoreApi.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EquipeController : ControllerBase
+    public class CalendarioController : ControllerBase
     {
-        private readonly IEquipeService _service;
+        private readonly ICalendarioService _service;
 
-        public EquipeController(IEquipeService service)
+        public CalendarioController(ICalendarioService calendario)
         {
-            _service = service;
+            _service = calendario;
         }
 
         [HttpPost("Editar")]
-        public string Editar([FromBody] Equipe equipe)
+        public string Editar([FromBody] Calendario calendario)
         {
-            return _service.Atualizar(equipe);
+            return _service.Atualizar(calendario);
         }
 
         [HttpPost("Incluir")]
-        public string Incluir([FromBody] Equipe equipe)
+        public string Incluir([FromBody] Calendario calendario)
         {
-            return _service.Adicionar(equipe);
+            return _service.Adicionar(calendario);
         }
 
         [HttpGet("{codigo}")]
-        public Equipe Get(int codigo)
+        public Calendario Get(int codigo)
         {
             return _service.Get(codigo);
         }
 
         [HttpPost("Listar")]
-        public List<Equipe> Listar([FromBody]BuscarEquipe buscar)
+        public List<Calendario> Listar([FromBody] Calendario buscar)
         {
             return _service.Listar(buscar);
         }
@@ -50,6 +49,5 @@ namespace KnewinEventNetCoreApi.Api.Controllers
         {
             return _service.Deletar(codigo);
         }
-
     }
 }

@@ -5,16 +5,16 @@ using System.Text;
 
 namespace KnewinEventNetCoreApi.Service.IService
 {
-    public interface IUsuarioService
+    public interface IEventoService
     {
-        string Adicionar(Usuario usuario);
+        string Adicionar(Evento evento);
 
-        string Atualizar(Usuario usuario);
+        string Atualizar(Evento evento);
 
         string Deletar(int codigo);
 
-        Usuario Get(int codigo);
+        Evento Get(int codigo);
 
-        List<Usuario> Listar(Usuario usuario);
+        List<Evento> Listar(Evento evento);
     }
 }

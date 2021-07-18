@@ -3,7 +3,7 @@
 --Calendários(Cada equipe irá possuir um ou mais calendários)
 --Eventos(Um evento tem que estar vinculado à algum calendário)
 
---Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=KNEWIN_EVENT;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities
+--Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=KNEWIN_EVENT;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities -Force
 
 CREATE DATABASE KNEWIN_EVENT
 GO
@@ -58,4 +58,19 @@ GO
 
 ALTER TABLE EVENTO ADD CONSTRAINT FK_EVENTO_CALENDARIO FOREIGN KEY (COD_CALENDARIO)
 	REFERENCES CALENDARIO (COD_CALENDARIO)
+GO
+
+CREATE TABLE PRESENCA(
+	COD_PRESENCA INT PRIMARY KEY,
+	COD_EVENTO INT NOT NULL,
+	COD_USUARIO INT NOT NULL
+)
+GO
+
+ALTER TABLE PRESENCA ADD CONSTRAINT FK_PRESENCA_EVENTO FOREIGN KEY (COD_EVENTO)
+	REFERENCES EVENTO (COD_EVENTO)
+GO
+
+ALTER TABLE PRESENCA ADD CONSTRAINT FK_PRESENCA_USUARIO FOREIGN KEY (COD_USUARIO)
+	REFERENCES USUARIO (COD_USUARIO)
 GO

@@ -13,23 +13,41 @@ namespace KnewinEventNetCoreApi.Api.Controllers
     [Route("[controller]")]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioService _usuarioService;
+        private readonly IUsuarioService _service;
 
         public UsuarioController(IUsuarioService usuario)
         {
-            _usuarioService = usuario;
+            _service = usuario;
         }
 
-        [HttpGet]
-        public Usuario Get(int cod_usuario)
+        [HttpPost("Editar")]
+        public string Editar([FromBody] Usuario usuario)
         {
-            return _usuarioService.Get(cod_usuario);
+            return _service.Atualizar(usuario);
         }
 
         [HttpPost("Incluir")]
         public string Incluir([FromBody] Usuario usuario)
         {
-            return _usuarioService.Adicionar(usuario);
+            return _service.Adicionar(usuario);
+        }
+
+        [HttpGet("{codigo}")]
+        public Usuario Get(int codigo)
+        {
+            return _service.Get(codigo);
+        }
+
+        [HttpPost("Listar")]
+        public List<Usuario> Listar([FromBody] Usuario buscar)
+        {
+            return _service.Listar(buscar);
+        }
+
+        [HttpPost("Remover")]
+        public string Remover([FromBody] int codigo)
+        {
+            return _service.Deletar(codigo);
         }
     }
 }

@@ -3,38 +3,78 @@ using KnewinEventNetCoreApi.Repository.Repository;
 using KnewinEventNetCoreApi.Service.IService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace KnewinEventNetCoreApi.Service.Service
 {
     public class UsuarioService : IUsuarioService
     {
-        private readonly UsuarioRepository _usuarioRepository;
+        private readonly UsuarioRepository _repository;
+        private readonly IEquipeService _serviceEquipe;
 
-        public UsuarioService()
+        public UsuarioService(IEquipeService service)
         {
-            _usuarioRepository = new UsuarioRepository();
+            _serviceEquipe = service;
+            _repository = new UsuarioRepository();
         }
-
+        
         public string Adicionar(Usuario usuario)
         {
             try
             {
-                if (!usuario.CodEquipe.HasValue && string.IsNullOrWhiteSpace(usuario.Nome))
-                    return "Preencha corretamente o usuario.";
+                if (ValidarUsuario(usuario))
+                    return "Preencha corretamente.";
 
-                _usuarioRepository.Adicionar(usuario);
-                return "Usuario incluido com sucesso.";
+                _repository.Adicionar(usuario);
+                return "Incluido com sucesso.";
             }
             catch
             {
-                return "Não foi possivel incluir o Usuario.";
+                return "Não foi possivel atender a solicitação.";
             }
         }
 
-        public Usuario Get(int cod_usuario)
+        private bool ValidarUsuario(Usuario usuario)
         {
-            return _usuarioRepository.Get(cod_usuario);
+            return usuario.CodEquipe.HasValue && _serviceEquipe.Exists(usuario.CodEquipe.Value) && string.IsNullOrWhiteSpace(usuario.Nome);
         }
+
+        public string Atualizar(Usuario usuario)
+        {
+            try
+            {
+                if (ValidarUsuario(usuario))
+                    return "Preencha corretamente.";
+
+                _repository.Atualizar(usuario);
+                return "Atualizado com sucesso.";
+            }
+            catch
+            {
+                return "Não foi possivel atender a solicitação.";
+            }
+        }
+
+        public string Deletar(int codigo)
+        {
+            try
+            {
+                if (codigo > 0)
+                    return "Escolha um registro para a exclusão.";
+
+                _repository.Deletar(codigo);
+                return "Atualizado com sucesso.";
+            }
+            catch
+            {
+                return "Não foi possivel atender a solicitação.";
+            }
+        }
+
+        public Usuario Get(int codigo) => _repository.Get(codigo);
+
+        public List<Usuario> Listar(Usuario usuario) => _repository.GetAll().Where(x => (usuario.CodEquipe == null || x.CodEquipe == usuario.CodEquipe) && (x.Nome == null || x.Nome.Contains(usuario.Nome))).ToList();
+
     }
 }

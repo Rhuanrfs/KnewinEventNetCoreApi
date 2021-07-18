@@ -20,6 +20,7 @@ namespace KnewinEventNetCoreApi.Model.Entities
         public virtual DbSet<Calendario> Calendarios { get; set; }
         public virtual DbSet<Equipe> Equipes { get; set; }
         public virtual DbSet<Evento> Eventos { get; set; }
+        public virtual DbSet<Presenca> Presencas { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -113,6 +114,34 @@ namespace KnewinEventNetCoreApi.Model.Entities
                     .WithMany(p => p.Eventos)
                     .HasForeignKey(d => d.CodCalendario)
                     .HasConstraintName("FK_EVENTO_CALENDARIO");
+            });
+
+            modelBuilder.Entity<Presenca>(entity =>
+            {
+                entity.HasKey(e => e.CodPresenca)
+                    .HasName("PK__PRESENCA__4B8030E3CF12A748");
+
+                entity.ToTable("PRESENCA");
+
+                entity.Property(e => e.CodPresenca)
+                    .ValueGeneratedNever()
+                    .HasColumnName("COD_PRESENCA");
+
+                entity.Property(e => e.CodEvento).HasColumnName("COD_EVENTO");
+
+                entity.Property(e => e.CodUsuario).HasColumnName("COD_USUARIO");
+
+                entity.HasOne(d => d.CodEventoNavigation)
+                    .WithMany(p => p.Presencas)
+                    .HasForeignKey(d => d.CodEvento)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PRESENCA_EVENTO");
+
+                entity.HasOne(d => d.CodUsuarioNavigation)
+                    .WithMany(p => p.Presencas)
+                    .HasForeignKey(d => d.CodUsuario)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PRESENCA_USUARIO");
             });
 
             modelBuilder.Entity<Usuario>(entity =>

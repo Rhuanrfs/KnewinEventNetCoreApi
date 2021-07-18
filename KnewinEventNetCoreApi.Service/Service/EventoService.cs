@@ -1,7 +1,5 @@
-﻿using KnewinEventNetCoreApi.Model.Busca;
-using KnewinEventNetCoreApi.Model.Entities;
+﻿using KnewinEventNetCoreApi.Model.Entities;
 using KnewinEventNetCoreApi.Repository.Repository;
-using KnewinEventNetCoreApi.Service.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +7,23 @@ using System.Text;
 
 namespace KnewinEventNetCoreApi.Service.Service
 {
-    public class EquipeService : IEquipeService
+    public class EventoService
     {
-        private readonly EquipeRepository _repository;
+        private readonly EventoRepository _repository;
 
-        public EquipeService()
+        public EventoService()
         {
-            _repository = new EquipeRepository();
+            _repository = new EventoRepository();
         }
 
-        public string Adicionar(Equipe equipe)
+        public string Adicionar(Evento evento)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(equipe.Nome))
+                if (Validar(evento))
                     return "Preencha corretamente.";
 
-                _repository.Adicionar(equipe);
+                _repository.Adicionar(evento);
                 return "Incluido com sucesso.";
             }
             catch
@@ -34,14 +32,19 @@ namespace KnewinEventNetCoreApi.Service.Service
             }
         }
 
-        public string Atualizar(Equipe equipe)
+        private bool Validar(Evento evento)
+        {
+            return string.IsNullOrWhiteSpace(evento.Nome);
+        }
+
+        public string Atualizar(Evento evento)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(equipe.Nome))
+                if (Validar(evento))
                     return "Preencha corretamente.";
 
-                _repository.Atualizar(equipe);
+                _repository.Atualizar(evento);
                 return "Atualizado com sucesso.";
             }
             catch
@@ -66,11 +69,9 @@ namespace KnewinEventNetCoreApi.Service.Service
             }
         }
 
-        public bool Exists(int codigo) => _repository.Get(codigo) != null;
+        public Evento Get(int codigo) => _repository.Get(codigo);
 
-        public Equipe Get(int codigo) => _repository.Get(codigo);
-
-        public List<Equipe> Listar(BuscarEquipe equipe) => _repository.GetAll().Where(x => (equipe.Ativo == null || x.Ativo == equipe.Ativo) && (x.Nome == null || x.Nome.Contains(equipe.Nome))).ToList();
+        public List<Evento> Listar(Evento evento) => _repository.GetAll().Where(x => (evento.CodCalendario == null || x.CodCalendario == evento.CodCalendario) && (x.Nome == null || x.Nome.Contains(evento.Nome))).ToList();
 
     }
 }

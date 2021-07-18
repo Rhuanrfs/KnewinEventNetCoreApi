@@ -2,43 +2,42 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 
 namespace KnewinEventNetCoreApi.Repository.Repository
 {
-    public class UsuarioRepository
+    public class EventoRepository
     {
         private readonly KNEWIN_EVENTContext context;
 
-        public UsuarioRepository()
+        public EventoRepository()
         {
             context = new KNEWIN_EVENTContext();
         }
 
-        public Usuario Get(int codigo) => context.Usuarios.FirstOrDefault<Usuario>(u => u.CodUsuario == codigo);
+        public Evento Get(int codigo) => context.Eventos.FirstOrDefault<Evento>(u => u.CodEvento == codigo);
 
-        public IQueryable<Usuario> GetAll() => context.Usuarios;
+        public IQueryable<Evento> GetAll() => context.Eventos;
 
-        public void Adicionar(Usuario usuario)
+        public void Adicionar(Evento evento)
         {
-            context.Add(usuario);
+            context.Add(evento);
             context.SaveChanges();
         }
 
-        public void Atualizar(Usuario usuario)
+        public void Atualizar(Evento evento)
         {
-            Usuario editar = Get(usuario.CodUsuario);
+            Evento editar = Get(evento.CodEvento);
             if (editar != null)
             {
-                context.Update(usuario);
+                context.Update(evento);
                 context.SaveChanges();
             }
             else
                 throw new Exception("Registro não encontrado");
         }
 
-        public void Deletar(int codigo)=> context.Remove<Usuario>(Get(codigo));
+        public void Deletar(int codigo) => context.Remove<Evento>(Get(codigo));
 
     }
 }

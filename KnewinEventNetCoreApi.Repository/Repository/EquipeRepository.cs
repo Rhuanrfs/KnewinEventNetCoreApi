@@ -18,7 +18,7 @@ namespace KnewinEventNetCoreApi.Repository.Repository
 
         public Equipe Get(int codigo) => context.Equipes.FirstOrDefault<Equipe>(u => u.CodEquipe == codigo);
 
-        public IQueryable<Equipe> GetAll(Expression<Func<Equipe, int, bool>> predicate) => context.Equipes.Where(predicate);
+        public IQueryable<Equipe> GetAll() => context.Equipes;
 
         public void Adicionar(Equipe equipe)
         {
@@ -38,6 +38,10 @@ namespace KnewinEventNetCoreApi.Repository.Repository
                 throw new Exception("Registro não encontrado");
         }
 
-        public void Deletar(Equipe equipe) => context.Remove<Equipe>(equipe);
+        public void Deletar(int codigo)
+        {
+            Equipe equipe = Get(codigo);
+            context.Remove<Equipe>(equipe);
+        }
     }
 }

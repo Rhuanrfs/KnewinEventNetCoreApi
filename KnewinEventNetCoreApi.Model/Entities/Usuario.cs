@@ -7,6 +7,11 @@ namespace KnewinEventNetCoreApi.Model.Entities
 {
     public partial class Usuario
     {
+        public Usuario()
+        {
+            Presencas = new HashSet<Presenca>();
+        }
+
         public int CodUsuario { get; set; }
         public string Nome { get; set; }
         public string Apelido { get; set; }
@@ -16,5 +21,6 @@ namespace KnewinEventNetCoreApi.Model.Entities
         public int? CodEquipe { get; set; }
 
         public virtual Equipe CodEquipeNavigation { get; set; }
+        public virtual ICollection<Presenca> Presencas { get; set; }
     }
 }

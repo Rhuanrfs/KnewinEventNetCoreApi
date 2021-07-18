@@ -1,7 +1,5 @@
-﻿using KnewinEventNetCoreApi.Model.Busca;
-using KnewinEventNetCoreApi.Model.Entities;
+﻿using KnewinEventNetCoreApi.Model.Entities;
 using KnewinEventNetCoreApi.Repository.Repository;
-using KnewinEventNetCoreApi.Service.IService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +7,23 @@ using System.Text;
 
 namespace KnewinEventNetCoreApi.Service.Service
 {
-    public class EquipeService : IEquipeService
+    public class CalendarioService
     {
-        private readonly EquipeRepository _repository;
+        private readonly CalendarioRepository _repository;
 
-        public EquipeService()
+        public CalendarioService()
         {
-            _repository = new EquipeRepository();
+            _repository = new CalendarioRepository();
         }
 
-        public string Adicionar(Equipe equipe)
+        public string Adicionar(Calendario calendario)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(equipe.Nome))
+                if (Validar(calendario))
                     return "Preencha corretamente.";
 
-                _repository.Adicionar(equipe);
+                _repository.Adicionar(calendario);
                 return "Incluido com sucesso.";
             }
             catch
@@ -34,14 +32,19 @@ namespace KnewinEventNetCoreApi.Service.Service
             }
         }
 
-        public string Atualizar(Equipe equipe)
+        private bool Validar(Calendario calendario)
+        {
+            return string.IsNullOrWhiteSpace(calendario.Nome);
+        }
+
+        public string Atualizar(Calendario calendario)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(equipe.Nome))
+                if (Validar(calendario))
                     return "Preencha corretamente.";
 
-                _repository.Atualizar(equipe);
+                _repository.Atualizar(calendario);
                 return "Atualizado com sucesso.";
             }
             catch
@@ -66,11 +69,9 @@ namespace KnewinEventNetCoreApi.Service.Service
             }
         }
 
-        public bool Exists(int codigo) => _repository.Get(codigo) != null;
+        public Calendario Get(int codigo) => _repository.Get(codigo);
 
-        public Equipe Get(int codigo) => _repository.Get(codigo);
-
-        public List<Equipe> Listar(BuscarEquipe equipe) => _repository.GetAll().Where(x => (equipe.Ativo == null || x.Ativo == equipe.Ativo) && (x.Nome == null || x.Nome.Contains(equipe.Nome))).ToList();
+        public List<Calendario> Listar(Calendario calendario) => _repository.GetAll().Where(x => (calendario.CodEquipe == null || x.CodEquipe == calendario.CodEquipe) && (x.Nome == null || x.Nome.Contains(calendario.Nome))).ToList();
 
     }
 }
